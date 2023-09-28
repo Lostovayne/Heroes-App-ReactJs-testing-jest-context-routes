@@ -1,18 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-import { useForm } from '../../hooks/useForm';
+import {useNavigate} from 'react-router-dom';
+import {useForm} from '../../hooks/useForm';
 import queryString from 'query-string';
-import { HeroCard } from '../components/HeroCard';
-import { useLocation } from 'react-router-dom';
-import { getHeroByName } from '../helpers';
+import {HeroCard} from '../components/HeroCard';
+import {useLocation} from 'react-router-dom';
+import {getHeroByName} from '../helpers';
 
 export const SearchPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { q = '' } = queryString.parse(location.search);
+    const {q = ''} = queryString.parse(location.search);
 
     const heroes = getHeroByName(q);
 
-    const { searchText, onInputChange, onResetForm } = useForm({
+    const {searchText, onInputChange, onResetForm} = useForm({
         searchText: q,
     });
 
@@ -30,7 +30,7 @@ export const SearchPage = () => {
                 <div className='col-5'>
                     <h4>Searching</h4>
                     <hr />
-                    <form onSubmit={onSearchSubmit}>
+                    <form onSubmit={onSearchSubmit} aria-label='form'>
                         <input
                             type='text'
                             placeholder='Search a hero'
@@ -52,7 +52,9 @@ export const SearchPage = () => {
 
                     {q === '' && <div className='alert alert-primary'>Search a hero</div>}
                     {heroes.length === 0 && q !== '' && (
-                        <div className='alert alert-danger'>No hero with {q}</div>
+                        <div aria-label='HeroAlert' className='alert alert-danger'>
+                            No hero with {q}
+                        </div>
                     )}
 
                     {heroes.map((hero) => (
